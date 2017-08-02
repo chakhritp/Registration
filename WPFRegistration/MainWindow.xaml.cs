@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Shared;
