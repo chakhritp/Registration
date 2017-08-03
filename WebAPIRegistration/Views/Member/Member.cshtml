@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "Member";
+}
+
+<h2 style="text-align: center;">Member</h2>
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script lang="ja" type="text/javascript">
+    function GetMemberById() {
+        var id = 1;
+        $.ajax({
+            url: 'http://localhost:49971/api/Members/' + id,
+            type: 'GET',
+            dataType: "json",
+            success: function (data) {
+
+                var datavalue = data;
+                var myJsonObject = datavalue;
+
+                var MemberId = myJsonObject[0].MemberId;
+                var Title = myJsonObject[0].Title;
+                var FirstName = myJsonObject[0].FirstName;
+                var LastName = myJsonObject[0].LastName;
+                var Sex = myJsonObject[0].Sex;
+                var Age = myJsonObject[0].Age;
+                var Address = myJsonObject[0].Address;
+
+                $('<tr><td>' + MemberId + '</td><td>' + Title +
+                    '</td><td>' + FirstName + '</td><td>' + LastName +
+                    '</td><td>' + Sex + '</td><td>' + Age +
+                    '</td><td>' + Address + '</td></tr>').appendTo('#MemberTbl');
+
+                alert('bought by id data successfully');
+            },
+            error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+    function AllMembers() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:49971/api/Members",
+
+            dataType: "json",
+            success: function (data) {
+
+                var datavalue = data;
+                var myJsonObject = datavalue;
+                contentType: "application/json";
+                $.each(myJsonObject, function (i, mobj) {
+                    $("#MemberTbl").append('<tr><td width="50px">' + mobj.MemberId +
+                        '</td><td width="50px">' + mobj.Title +
+                        '</td><td width="50px">' + mobj.FirstName +
+                        '</td><td width="50px">' + mobj.LastName +
+                        '</td><td width="50px">' + mobj.Sex +
+                        '</td><td width="50px">' + mobj.Age +
+                        '</td>' + '</td><td width="50px">'
+                        + mobj.Address + '</td></tr>');
+
+                });
+
+                alert('bought all data successfully');
+            },
+            error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+
+    function PostData() {
+        var cardetails = { CarName: "Ertiga", CarModel: "LXI", CarPrice: "5000000", CarColor: "blue" };
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(cardetails),
+            url: "http://localhost:32359/api/Cardetails",
+            dataType: "json",
+            contentType: "application/json",
+        });
+
+        alert('posted data successfully');
+    }
+    /*function PutData() {
+        var cardetails = { CarName: "Ertiga", CarModel: "LXI", CarPrice: "5000000", CarColor: "blue" };
+        var t = JSON.stringify(cardetails);
+        var id = "0";
+        $.ajax({
+            url: 'http://localhost:32359/api/Cardetails/' + id,
+            type: "put",
+            contentType: "application/json; charset=utf-8",
+            data: t,
+            dataType: "json",
+
+        });
+        alert('PUT (updated) data successfully');
+    }
+    function deleteData1() {
+        var id = 0;
+        $.ajax({
+            url: 'http://localhost:32359/api/CarDetails/' + id,
+            type: 'DELETE',
+            success: function (data) {
+
+            },
+            error: function (data) {
+                alert('Problem in deleting car:' + data.responseText);
+            }
+        });
+
+        alert('Deleted data successfully');
+    }*/
+</script>
+
+@using (Html.BeginForm())
+{
+    <div style="margin-left: 15%; margin-right: 15%; width: 100%">
+        <table width="70%" style="color: lavender; text-align: center; border: solid;">
+            <tr>
+                <td>
+                    <input id="btnget" type="button" onclick="AllMembers();" value="Get_Data" />
+                    <input id="btngetbyid" type="button" onclick="GetMemberById();" value="Get_BYID" />
+                    <input id="Btnpost" type="button" onclick="PostData();" value="Post_Data" />
+                    <input id="Btnput" type="button" onclick="PutData();" value="Put_Data" />
+                    <input id="BtnDelete" type="button" onclick="deleteData1();" value="Delete" />
+                </td>
+
+            </tr>
+        </table>
+        <table width="70%" style="color: black; border: solid; text-align:center; " id="MemberTbl">
+
+            <tr>
+                <td><b>MemberId</b></td>
+                <td><b>Title</b></td>
+                <td><b>FirstName</b></td>
+                <td><b>LastName</b></td>
+                <td><b>Sex</b></td>
+                <td><b>Age</b></td>
+                <td><b>Address</b></td>
+            </tr>
+
+        </table>
+
+    </div>
+}

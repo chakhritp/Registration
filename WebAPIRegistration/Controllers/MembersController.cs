@@ -59,6 +59,7 @@ namespace WebAPIRegistration.Controllers
 
             if (id == 1)
             {
+                mb1.MemberId = 1;
                 mb1.Title = "Mr.";
                 mb1.FirstName = "Lionel";
                 mb1.LastName = "Messi";
@@ -69,6 +70,7 @@ namespace WebAPIRegistration.Controllers
             }
             else if (id == 2)
             {
+                mb2.MemberId = 2;
                 mb2.Title = "Ms.";
                 mb2.FirstName = "Gal";
                 mb2.LastName = "Gadot";
@@ -79,6 +81,7 @@ namespace WebAPIRegistration.Controllers
             }
             else if (id == 3)
             {
+                mb3.MemberId = 3;
                 mb3.Title = "Mr.";
                 mb3.FirstName = "Chakhrit";
                 mb3.LastName = "Phungdabot";
@@ -91,19 +94,22 @@ namespace WebAPIRegistration.Controllers
             return mbl;
         }
 
-        // POST api/members
-        public void Post([FromBody]string value)
+        [HttpPost] // POST api/members
+        public void PostMember([FromBody]Member member)
         {
+
         }
 
-        // PUT api/members/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]  // PUT api/members/5
+        public void PutMember(int id, [FromBody]Member member)
         {
+
         }
 
-        // DELETE api/members/5
-        public void Delete(int id)
+        [HttpDelete] // DELETE api/members/5
+        public void DeleteMember(int id)
         {
+
         }
     }
 }
