@@ -24,3 +24,14 @@ C:\TRWorks\Registration\WPFRegistration\obj\Debug\WPFRegistration_MarkupCompile.
 C:\TRWorks\Registration\WPFRegistration\obj\Debug\WPFRegistration.g.resources
 C:\TRWorks\Registration\WPFRegistration\obj\Debug\WPFRegistration.Properties.Resources.resources
 C:\TRWorks\Registration\WPFRegistration\obj\Debug\WPFRegistration.csproj.GenerateResource.Cache
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\Newtonsoft.Json.dll
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\System.Net.Http.Formatting.dll
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\Newtonsoft.Json.xml
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\System.Net.Http.Formatting.xml
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\MongoDB.Bson.dll
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\MongoDB.Driver.Core.dll
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\MongoDB.Driver.dll
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\MongoDB.Bson.xml
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\MongoDB.Driver.xml
+C:\TRWorks\Registration\WPFRegistration\bin\Debug\MongoDB.Driver.Core.xml

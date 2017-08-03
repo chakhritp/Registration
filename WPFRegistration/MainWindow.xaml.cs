@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Shared;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Driver.Builders;
 
 namespace WPFRegistration
 {
@@ -43,10 +43,43 @@ namespace WPFRegistration
             public string Address { get; set; }
         }
 
-        MongoClient mongo = new MongoClient("mongodb://localhost");
-        MongoServer server;
-        MongoDatabase database;
-        MongoCollection<Member> _members;
+        public class MongoDBContext
+        {
+            //public static bool IsSSL { get; set; }
+            private IMongoDatabase _database { get; set; }
+
+            public MongoDBContext()
+            {
+                try
+                {
+                    MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl("mongodb://localhost"));
+
+                    //if (IsSSL)
+                    //{
+                    //    settings.SslSettings = new SslSettings { EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 };
+                    //}
+
+                    var mongoClient = new MongoClient(settings);
+
+                    _database = mongoClient.GetDatabase("RegistrationDB");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Can not access to db server.", ex);
+                }
+            }
+
+            public IMongoCollection<Member> Members
+            {
+                get
+                {
+                    return _database.GetCollection<Member>("Members");
+                }
+            }
+        }
+
+        MongoDBContext dbContext;
+
         Member _member;
 
         public MainWindow()
@@ -60,9 +93,7 @@ namespace WPFRegistration
 
         private void connectDB()
         {
-            server = mongo.GetServer();
-            server.Connect();
-            database = server.GetDatabase("RegistrationDB");
+            dbContext = new MongoDBContext();
         }
 
         private void resetControls()
@@ -78,10 +109,11 @@ namespace WPFRegistration
         private void bindGrid()
         {
             // bind the existing member collection<table> record in grid
-            _members = database.GetCollection<Member>("Members");
+            List<Member> memberList = dbContext.Members.Find(m => true).ToList();
 
-            dtgMembers.DataContext = _members.FindAll();
-            dtgMembers.ItemsSource = _members.FindAll();
+            dtgMembers.DataContext = memberList;
+            dtgMembers.ItemsSource = memberList;
+            dtgMembers.IsReadOnly = true;
         }
 
         private void reversBind(Member _member)
@@ -96,43 +128,30 @@ namespace WPFRegistration
 
         private Member getMember(int id)
         {
-            IMongoQuery query = Query.EQ("MemberId", id);
-
-            return _members.Find(query).FirstOrDefault();
+            return dbContext.Members.Find(m => m.MemberId == id).FirstOrDefault();
         }
         
         private void createMember(Member _member)
         {
-            _member.Id = ObjectId.GenerateNewId();
-
-            _members.Insert(_member);
+            dbContext.Members.InsertOne(_member);
         }
 
         private void updateMember(Member _member)
         {
-            IMongoQuery query = Query.EQ("MemberId", _member.MemberId);
-            IMongoUpdate update = Update
-                .Set("Title", _member.Title)
-                .Set("FirstName", _member.FirstName)
-                .Set("LastName", _member.LastName)
-                .Set("Sex", _member.Sex)
-                .Set("Age", _member.Age)
-                .Set("Address", _member.Address);
-            SafeModeResult result = _members.Update(query, update);
+            dbContext.Members.ReplaceOne(m => m.MemberId == _member.MemberId, _member);
         }
 
-        private void deleteUser()
+        private void deleteMember(Member _member)
         {
-            IMongoQuery query = Query.EQ("MemberId", _member.MemberId);
-            SafeModeResult result = _members.Remove(query);
+            dbContext.Members.DeleteOne(m => m.MemberId == _member.MemberId);
         }
 
         private void dtgMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
             {
-                Member val = (Member)e.AddedItems[0];
-                _member = getMember(val.MemberId);
+                Member member = (Member)e.AddedItems[0];
+                _member = getMember(member.MemberId);
 
                 reversBind(_member);
             }
@@ -145,8 +164,8 @@ namespace WPFRegistration
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            // insert the record in to the mydb info collaction<table> 
-            _member = new Member { MemberId = (int)database.GetCollection("Members").Count() + 1
+            //insert the record in to the RegistrationDB members collaction<table> 
+            _member = new Member { MemberId = (int)dbContext.Members.Count(new BsonDocument()) + 1
                                     , Title = cmbTitle.Text
                                     , FirstName = txtFName.Text
                                     , LastName = txtLName.Text
@@ -155,7 +174,6 @@ namespace WPFRegistration
                                     , Address = txtAddr.Text };
 
             createMember(_member);
-
             resetControls();
             bindGrid();
         }
@@ -172,15 +190,13 @@ namespace WPFRegistration
             _member.Address = txtAddr.Text;
 
             updateMember(_member);
-
             resetControls();
             bindGrid();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            deleteUser();
-
+            deleteMember(_member);
             resetControls();
             bindGrid();
         }
