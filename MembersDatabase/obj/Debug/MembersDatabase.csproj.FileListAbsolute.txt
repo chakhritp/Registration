@@ -1,0 +1,12 @@
+C:\TRWorks\Registration\MembersDatabase\obj\Debug\MembersDatabase.csprojResolveAssemblyReference.cache
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MembersDatabase.dll
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MembersDatabase.pdb
+C:\TRWorks\Registration\MembersDatabase\obj\Debug\MembersDatabase.dll
+C:\TRWorks\Registration\MembersDatabase\obj\Debug\MembersDatabase.pdb
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MongoDB.Bson.dll
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MongoDB.Driver.Core.dll
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MongoDB.Driver.dll
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MongoDB.Bson.xml
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MongoDB.Driver.xml
+C:\TRWorks\Registration\MembersDatabase\bin\Debug\MongoDB.Driver.Core.xml

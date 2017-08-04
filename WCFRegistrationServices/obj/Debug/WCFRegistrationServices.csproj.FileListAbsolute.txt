@@ -1,0 +1,16 @@
+C:\TRWorks\Registration\WCFRegistrationServices\obj\Debug\WCFRegistrationServices.csprojResolveAssemblyReference.cache
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\WCFRegistrationServices.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\WCFRegistrationServices.pdb
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MembersDatabase.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\WCFRegistrationServiceInterfaces.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MembersDatabase.pdb
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\WCFRegistrationServiceInterfaces.pdb
+C:\TRWorks\Registration\WCFRegistrationServices\obj\Debug\WCFRegistrationServices.dll
+C:\TRWorks\Registration\WCFRegistrationServices\obj\Debug\WCFRegistrationServices.pdb
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.Core.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Bson.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.xml
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.Core.xml
+C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Bson.xml

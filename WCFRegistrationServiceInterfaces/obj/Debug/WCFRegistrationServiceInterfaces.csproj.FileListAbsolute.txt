@@ -1,0 +1,5 @@
+C:\TRWorks\Registration\WCFRegistrationServiceInterfaces\bin\Debug\WCFRegistrationServiceInterfaces.dll
+C:\TRWorks\Registration\WCFRegistrationServiceInterfaces\bin\Debug\WCFRegistrationServiceInterfaces.pdb
+C:\TRWorks\Registration\WCFRegistrationServiceInterfaces\obj\Debug\WCFRegistrationServiceInterfaces.csprojResolveAssemblyReference.cache
+C:\TRWorks\Registration\WCFRegistrationServiceInterfaces\obj\Debug\WCFRegistrationServiceInterfaces.dll
+C:\TRWorks\Registration\WCFRegistrationServiceInterfaces\obj\Debug\WCFRegistrationServiceInterfaces.pdb
