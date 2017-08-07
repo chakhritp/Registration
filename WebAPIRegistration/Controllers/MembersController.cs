@@ -6,6 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using WebAPIRegistration.Models;
 
+using System.ServiceModel;
+using System.ServiceModel.Description;
+using WCFRegistrationServiceInterfaces;
+using WCFRegistrationServices;
+
 namespace WebAPIRegistration.Controllers
 {
     public class MembersController : ApiController
@@ -13,7 +18,7 @@ namespace WebAPIRegistration.Controllers
         [HttpGet] // GET api/members
         public IEnumerable<Member> GetAllMembers()
         {
-            Member mb1 = new Member();
+            /*Member mb1 = new Member();
             Member mb2 = new Member();
             Member mb3 = new Member();
             List<Member> mbl = new List<Member>();
@@ -44,7 +49,37 @@ namespace WebAPIRegistration.Controllers
 
             mbl.Add(mb1);
             mbl.Add(mb2);
-            mbl.Add(mb3);
+            mbl.Add(mb3);*/
+
+            List<Member> mbl = new List<Member>();
+
+            using (ChannelFactory<IMemberRegistrationService> registrationServiceProxy =
+                    new ChannelFactory<IMemberRegistrationService>("MemberRegistrationServiceEndpoint"))
+            {
+                registrationServiceProxy.Open();
+
+                IMemberRegistrationService memberRegistrationService = registrationServiceProxy.CreateChannel();
+                MemberDTC[] members = memberRegistrationService.GetMembers();
+
+                foreach (MemberDTC m in members)
+                {
+                    Member mb = new Member();
+
+                    mb.MemberId = m.MemberId;
+                    mb.Title = m.MemberTitle;
+                    mb.FirstName = m.MemberFirstName;
+                    mb.LastName = m.MemberLastName;
+                    mb.Sex = m.MemberSex;
+                    mb.Age = m.MemberAge;
+                    mb.Address = m.MemberAddress;
+
+                    mbl.Add(mb);
+
+                    //Console.WriteLine(m.MemberId + "," + m.MemberTitle + "," + m.MemberFirstName + "," + m.MemberLastName + "," + m.MemberSex + "," + m.MemberAge + "," + m.MemberAddress);
+                }
+
+                registrationServiceProxy.Close();
+            }
 
             return mbl;
         }
@@ -52,7 +87,7 @@ namespace WebAPIRegistration.Controllers
         // GET api/members/5
         public IEnumerable<Member> Get(int id)
         {
-            Member mb1 = new Member();
+            /*Member mb1 = new Member();
             Member mb2 = new Member();
             Member mb3 = new Member();
             List<Member> mbl = new List<Member>();
@@ -89,6 +124,36 @@ namespace WebAPIRegistration.Controllers
                 mb3.Age = 35;
                 mb3.Address = "Thailand";
                 mbl.Add(mb3);
+            }*/
+
+            List<Member> mbl = new List<Member>();
+
+            using (ChannelFactory<IMemberRegistrationService> registrationServiceProxy =
+                    new ChannelFactory<IMemberRegistrationService>("MemberRegistrationServiceEndpoint"))
+            {
+                registrationServiceProxy.Open();
+
+                IMemberRegistrationService memberRegistrationService = registrationServiceProxy.CreateChannel();
+                MemberDTC member = memberRegistrationService.GetMember(id);
+
+                //foreach (MemberDTC m in members)
+                //{
+                    Member mb = new Member();
+
+                    mb.MemberId = member.MemberId;
+                    mb.Title = member.MemberTitle;
+                    mb.FirstName = member.MemberFirstName;
+                    mb.LastName = member.MemberLastName;
+                    mb.Sex = member.MemberSex;
+                    mb.Age = member.MemberAge;
+                    mb.Address = member.MemberAddress;
+
+                    mbl.Add(mb);
+
+                    //Console.WriteLine(m.MemberId + "," + m.MemberTitle + "," + m.MemberFirstName + "," + m.MemberLastName + "," + m.MemberSex + "," + m.MemberAge + "," + m.MemberAddress);
+                //}
+
+                registrationServiceProxy.Close();
             }
 
             return mbl;
@@ -97,7 +162,24 @@ namespace WebAPIRegistration.Controllers
         [HttpPost] // POST api/members
         public void PostMember([FromBody]Member member)
         {
+            using (ChannelFactory<IMemberRegistrationService> registrationServiceProxy =
+            new ChannelFactory<IMemberRegistrationService>("MemberRegistrationServiceEndpoint"))
+            {
+                registrationServiceProxy.Open();
 
+                IMemberRegistrationService memberRegistrationService = registrationServiceProxy.CreateChannel();
+                MemberDTC m = new MemberDTC();
+
+                m.MemberTitle = member.Title;
+                m.MemberFirstName = member.FirstName;
+                m.MemberLastName = member.LastName;
+                m.MemberSex = member.Sex;
+                m.MemberAge = member.Age;
+                m.MemberAddress = member.Address;
+
+                memberRegistrationService.CreateMember(m);
+                registrationServiceProxy.Close();
+            }
         }
 
         [HttpPut]  // PUT api/members/5

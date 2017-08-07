@@ -10,7 +10,6 @@ C:\TRWorks\Registration\WCFRegistrationServices\obj\Debug\WCFRegistrationService
 C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.dll
 C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.Core.dll
 C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Bson.dll
-C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.xml
 C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Driver.Core.xml
 C:\TRWorks\Registration\WCFRegistrationServices\bin\Debug\MongoDB.Bson.xml

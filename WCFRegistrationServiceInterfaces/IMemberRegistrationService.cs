@@ -12,20 +12,20 @@ namespace WCFRegistrationServiceInterfaces
     [ServiceContract]
     public interface IMemberRegistrationService
     {
-        //[OperationContract]
-        //void EnrollStudent(Student s);
-
         [OperationContract]
         MemberDTC[] GetMembers();
 
         [OperationContract]
+        MemberDTC GetMember(int id);
+
+        [OperationContract]
         void CreateMember(MemberDTC mdtc);
 
-        /*[OperationContract]
+        [OperationContract]
         void UpdateMember(MemberDTC mdtc);
 
         [OperationContract]
-        void DeleteMembers(MemberDTC mdtc);*/
+        void DeleteMember(MemberDTC mdtc);
     }
 
     [DataContract]
@@ -33,11 +33,11 @@ namespace WCFRegistrationServiceInterfaces
     {
         private int Id;
         private string Title;
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
-        private string Sex { get; set; }
-        private int Age { get; set; }
-        private string Address { get; set; }
+        private string FirstName;
+        private string LastName;
+        private string Sex;
+        private int Age;
+        private string Address;
 
         [DataMember]
         public int MemberId
@@ -89,4 +89,3 @@ namespace WCFRegistrationServiceInterfaces
         }
     }
 }
-

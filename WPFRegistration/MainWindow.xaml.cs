@@ -32,8 +32,8 @@ namespace WPFRegistration
 
         public class Member
         {
-            [BsonId]
-            public MongoDB.Bson.BsonObjectId Id { get; set; }
+            /*[BsonId]
+            public MongoDB.Bson.BsonObjectId Id { get; set; }*/
             public int MemberId { get; set; }
             public string Title { get; set; }
             public string FirstName { get; set; }
@@ -89,24 +89,24 @@ namespace WPFRegistration
         {
             InitializeComponent();
 
-            connectDB();
+            //connectDB();
 
-            //client.BaseAddress = new Uri("http://localhost:49971");
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.BaseAddress = new Uri("http://localhost:49971");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            //this.Loaded += MainWindow_Loaded;
+            this.Loaded += MainWindow_Loaded;
 
+            //resetControls();
+            //bindGrid();
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            //response = await client.GetAsync("/api/Members");
+            //response.EnsureSuccessStatusCode(); // Throw on error code.
             resetControls();
             bindGrid();
         }
-
-        /*private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            response = await client.GetAsync("/api/Members");
-            response.EnsureSuccessStatusCode(); // Throw on error code.
-            resetControls();
-            bindGrid();
-        }*/
 
         private void connectDB()
         {
@@ -123,20 +123,24 @@ namespace WPFRegistration
             txtAddr.Clear();
         }
 
-        private void bindGrid()
+        private async void bindGrid()
         {
             // bind the existing member collection<table> record in grid
-            List<Member> memberList = dbContext.Members.Find(m => true).ToList();
+            /*List<Member> memberList = dbContext.Members.Find(m => true).ToList();
 
             dtgMembers.DataContext = memberList;
             dtgMembers.ItemsSource = memberList;
+            dtgMembers.IsReadOnly = true;*/
+
+            /*var members = await response.Content.ReadAsAsync<IEnumerable<Member>>();
+
+            dtgMembers.DataContext = members;
+            dtgMembers.ItemsSource = members;
+            dtgMembers.IsReadOnly = true;*/
+
+            dtgMembers.DataContext = await GetMembers(); ;
+            dtgMembers.ItemsSource = await GetMembers(); ;
             dtgMembers.IsReadOnly = true;
-
-            //var members = await response.Content.ReadAsAsync<IEnumerable<Member>>();
-
-            //dtgMembers.DataContext = members;
-            //dtgMembers.ItemsSource = members;
-            //dtgMembers.IsReadOnly = true;
         }
 
         private void reversBind(Member _member)
@@ -169,14 +173,24 @@ namespace WPFRegistration
             dbContext.Members.DeleteOne(m => m.MemberId == _member.MemberId);
         }
 
-        private void dtgMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void dtgMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
             {
                 Member member = (Member)e.AddedItems[0];
-                _member = getMember(member.MemberId);
+                //_member = getMember(member.MemberId);
+                response = await client.GetAsync("/api/Members/" + member.MemberId);
+                response.EnsureSuccessStatusCode(); // Throw on error code.
+                /*var members = await response.Content.ReadAsAsync<Member>().Result;
 
-                reversBind(_member);
+                cmbTitle.Text = members.Title;
+                txtFName.Text = members.FirstName;
+                txtLName.Text = members.LastName;
+                cmbSex.Text = members.Sex;
+                txtAge.Text = members.Age.ToString();
+                txtAddr.Text = members.Address;*/
+
+                //reversBind(members);
             }
         }
 
@@ -199,7 +213,7 @@ namespace WPFRegistration
             //createMember(_member);
             /*MemberId = (int)dbContext.Members.Count(new BsonDocument()) + 1
                                     , */
-            /*try
+            try
             {
                 var member = new Member()
                 {
@@ -207,6 +221,7 @@ namespace WPFRegistration
                     //id = int.Parse(txtStudentID.Text),
                     //gender = cbxGender.SelectedItem.ToString(),
                     //age = int.Parse(txtAge.Text)
+                    
 
                     Title = cmbTitle.Text
                                     , FirstName = txtFName.Text
@@ -217,31 +232,31 @@ namespace WPFRegistration
                 };
                 var response = await client.PostAsJsonAsync("/api/Members/", member);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
-                MessageBox.Show("Member Added Successfully", "Result", MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show("Member Added Successfully", "Result", MessageBoxButton.OK, MessageBoxImage.Information);
                 //studentsListView.ItemsSource = await GetAllStudents();
                 //studentsListView.ScrollIntoView(studentsListView.ItemContainerGenerator.Items[studentsListView.Items.Count - 1]);
                 resetControls();
-                //bindGrid();
-                dtgMembers.DataContext = await GetMembers(); ;
-                dtgMembers.ItemsSource = await GetMembers(); ;
-                dtgMembers.IsReadOnly = true;
+                bindGrid();
+                //dtgMembers.DataContext = await GetMembers(); ;
+                //dtgMembers.ItemsSource = await GetMembers(); ;
+                //dtgMembers.IsReadOnly = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Student not Added, May be due to Duplicate ID");
-            }*/
+            }
 
             //resetControls();
             //bindGrid();
         }
 
-        /*public async Task<IEnumerable<Member>> GetMembers()
+        public async Task<IEnumerable<Member>> GetMembers()
         {
             response = await client.GetAsync("/api/Members");
             response.EnsureSuccessStatusCode(); // Throw on error code.
             var members = await response.Content.ReadAsAsync<IEnumerable<Member>>();
             return members;
-        }*/
+        }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {

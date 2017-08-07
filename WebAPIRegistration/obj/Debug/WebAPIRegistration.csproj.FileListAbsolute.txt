@@ -63,3 +63,15 @@ C:\TRWorks\Registration\WebAPIRegistration\bin\zh-Hant\System.Spatial.resources.
 C:\TRWorks\Registration\WebAPIRegistration\obj\Debug\WebAPIRegistration.csprojResolveAssemblyReference.cache
 C:\TRWorks\Registration\WebAPIRegistration\obj\Debug\WebAPIRegistration.dll
 C:\TRWorks\Registration\WebAPIRegistration\obj\Debug\WebAPIRegistration.pdb
+C:\TRWorks\Registration\WebAPIRegistration\bin\WCFRegistrationServiceInterfaces.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\WCFRegistrationServices.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\MembersDatabase.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Bson.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Driver.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Driver.Core.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\WCFRegistrationServiceInterfaces.pdb
+C:\TRWorks\Registration\WebAPIRegistration\bin\WCFRegistrationServices.pdb
+C:\TRWorks\Registration\WebAPIRegistration\bin\MembersDatabase.pdb
+C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Bson.xml
+C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Driver.xml
+C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Driver.Core.xml
