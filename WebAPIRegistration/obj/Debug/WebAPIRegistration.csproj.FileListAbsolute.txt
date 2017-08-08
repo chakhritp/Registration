@@ -75,3 +75,9 @@ C:\TRWorks\Registration\WebAPIRegistration\bin\MembersDatabase.pdb
 C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Bson.xml
 C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Driver.xml
 C:\TRWorks\Registration\WebAPIRegistration\bin\MongoDB.Driver.Core.xml
+C:\TRWorks\Registration\WebAPIRegistration\bin\System.Net.Http.Formatting.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\System.Web.Http.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\System.Web.Http.WebHost.dll
+C:\TRWorks\Registration\WebAPIRegistration\bin\System.Net.Http.Formatting.xml
+C:\TRWorks\Registration\WebAPIRegistration\bin\System.Web.Http.xml
+C:\TRWorks\Registration\WebAPIRegistration\bin\System.Web.Http.WebHost.xml

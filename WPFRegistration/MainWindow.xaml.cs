@@ -272,16 +272,15 @@ namespace WPFRegistration
                     //gender = cbxGender.SelectedItem.ToString(),
                     //age = int.Parse(txtAge.Text)
 
-                    Title = cmbTitle.Text
+                    MemberId = _member.MemberId
+                    ,Title = cmbTitle.Text
                     ,FirstName = txtFName.Text
                     ,LastName = txtLName.Text
                     ,Sex = cmbSex.Text
                     ,Age = Convert.ToInt16(txtAge.Text)
                     ,Address = txtAddr.Text
                 };
-                string temp = "/api/Members/" + _member.MemberId;
-                MessageBox.Show(temp);
-                var response = await client.PutAsJsonAsync("/api/Members/" + _member.MemberId, member);
+                var response = await client.PutAsJsonAsync($"/api/Members/{_member.MemberId}", member);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
                 //MessageBox.Show("Student Added Successfully", "Result", MessageBoxButton.OK, MessageBoxImage.Information);
                 //studentsListView.ItemsSource = await GetAllStudents();
@@ -299,11 +298,27 @@ namespace WPFRegistration
             //bindGrid();
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private async void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            deleteMember(_member);
-            resetControls();
-            bindGrid();
+            //deleteMember(_member);
+
+            try
+            {
+                var response = await client.DeleteAsync($"/api/Members/{_member.MemberId}");
+                response.EnsureSuccessStatusCode(); // Throw on error code.
+                //MessageBox.Show("Student Added Successfully", "Result", MessageBoxButton.OK, MessageBoxImage.Information);
+                //studentsListView.ItemsSource = await GetAllStudents();
+                //studentsListView.ScrollIntoView(studentsListView.ItemContainerGenerator.Items[studentsListView.Items.Count - 1]);
+                resetControls();
+                bindGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //resetControls();
+            //bindGrid();
         }
 
     }

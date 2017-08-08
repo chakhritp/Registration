@@ -209,7 +209,17 @@ namespace WebAPIRegistration.Controllers
         [HttpDelete] // DELETE api/members/5
         public void DeleteMember(int id)
         {
+            using (ChannelFactory<IMemberRegistrationService> registrationServiceProxy =
+            new ChannelFactory<IMemberRegistrationService>("MemberRegistrationServiceEndpoint"))
+            {
+                registrationServiceProxy.Open();
 
+                IMemberRegistrationService memberRegistrationService = registrationServiceProxy.CreateChannel();
+                MemberDTC m = memberRegistrationService.GetMember(id);
+
+                memberRegistrationService.DeleteMember(m);
+                registrationServiceProxy.Close();
+            }
         }
     }
 }
