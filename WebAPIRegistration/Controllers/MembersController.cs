@@ -85,7 +85,7 @@ namespace WebAPIRegistration.Controllers
         }
 
         // GET api/members/5
-        public IEnumerable<Member> Get(int id)
+        public Member GetMember(int id)
         {
             /*Member mb1 = new Member();
             Member mb2 = new Member();
@@ -126,7 +126,8 @@ namespace WebAPIRegistration.Controllers
                 mbl.Add(mb3);
             }*/
 
-            List<Member> mbl = new List<Member>();
+            //List<Member> mbl = new List<Member>();
+            Member mb = new Member();
 
             using (ChannelFactory<IMemberRegistrationService> registrationServiceProxy =
                     new ChannelFactory<IMemberRegistrationService>("MemberRegistrationServiceEndpoint"))
@@ -138,7 +139,7 @@ namespace WebAPIRegistration.Controllers
 
                 //foreach (MemberDTC m in members)
                 //{
-                    Member mb = new Member();
+                    //Member mb = new Member();
 
                     mb.MemberId = member.MemberId;
                     mb.Title = member.MemberTitle;
@@ -148,7 +149,7 @@ namespace WebAPIRegistration.Controllers
                     mb.Age = member.MemberAge;
                     mb.Address = member.MemberAddress;
 
-                    mbl.Add(mb);
+                    //mbl.Add(mb);
 
                     //Console.WriteLine(m.MemberId + "," + m.MemberTitle + "," + m.MemberFirstName + "," + m.MemberLastName + "," + m.MemberSex + "," + m.MemberAge + "," + m.MemberAddress);
                 //}
@@ -156,7 +157,7 @@ namespace WebAPIRegistration.Controllers
                 registrationServiceProxy.Close();
             }
 
-            return mbl;
+            return mb;
         }
 
         [HttpPost] // POST api/members
@@ -185,7 +186,24 @@ namespace WebAPIRegistration.Controllers
         [HttpPut]  // PUT api/members/5
         public void PutMember(int id, [FromBody]Member member)
         {
+            using (ChannelFactory<IMemberRegistrationService> registrationServiceProxy =
+            new ChannelFactory<IMemberRegistrationService>("MemberRegistrationServiceEndpoint"))
+            {
+                registrationServiceProxy.Open();
 
+                IMemberRegistrationService memberRegistrationService = registrationServiceProxy.CreateChannel();
+                MemberDTC m = memberRegistrationService.GetMember(member.MemberId);
+
+                m.MemberTitle = member.Title;
+                m.MemberFirstName = member.FirstName;
+                m.MemberLastName = member.LastName;
+                m.MemberSex = member.Sex;
+                m.MemberAge = member.Age;
+                m.MemberAddress = member.Address;
+
+                memberRegistrationService.UpdateMember(m);
+                registrationServiceProxy.Close();
+            }
         }
 
         [HttpDelete] // DELETE api/members/5

@@ -80,12 +80,13 @@
 
         alert('posted data successfully');
     }
-    /*function PutData() {
-        var cardetails = { CarName: "Ertiga", CarModel: "LXI", CarPrice: "5000000", CarColor: "blue" };
-        var t = JSON.stringify(cardetails);
-        var id = "0";
+    function PutData() {
+        //var cardetails = { CarName: "Ertiga", CarModel: "LXI", CarPrice: "5000000", CarColor: "blue" };
+        var member = { MemberId:4, Title:"Mr.", FirstName:"CristianoA", LastName:"RonaldoB", Sex:"Male", Age:33, Address:"PortugalC" };
+        var t = JSON.stringify(member);
+        var id = "4";
         $.ajax({
-            url: 'http://localhost:32359/api/Cardetails/' + id,
+            url: 'http://localhost:49971/api/Members/' + id,
             type: "put",
             contentType: "application/json; charset=utf-8",
             data: t,
@@ -94,7 +95,7 @@
         });
         alert('PUT (updated) data successfully');
     }
-    function deleteData1() {
+    /*function deleteData1() {
         var id = 0;
         $.ajax({
             url: 'http://localhost:32359/api/CarDetails/' + id,

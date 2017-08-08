@@ -181,16 +181,10 @@ namespace WPFRegistration
                 //_member = getMember(member.MemberId);
                 response = await client.GetAsync("/api/Members/" + member.MemberId);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
-                /*var members = await response.Content.ReadAsAsync<Member>().Result;
+                //var members = await response.Content.ReadAsAsync<Member>();
+                _member = await response.Content.ReadAsAsync<Member>();
 
-                cmbTitle.Text = members.Title;
-                txtFName.Text = members.FirstName;
-                txtLName.Text = members.LastName;
-                cmbSex.Text = members.Sex;
-                txtAge.Text = members.Age.ToString();
-                txtAddr.Text = members.Address;*/
-
-                //reversBind(members);
+                reversBind(_member);
             }
         }
 
@@ -224,11 +218,11 @@ namespace WPFRegistration
                     
 
                     Title = cmbTitle.Text
-                                    , FirstName = txtFName.Text
-                                    , LastName = txtLName.Text
-                                    , Sex = cmbSex.Text
-                                    , Age = Convert.ToInt16(txtAge.Text)
-                                    , Address = txtAddr.Text
+                    , FirstName = txtFName.Text
+                    , LastName = txtLName.Text
+                    , Sex = cmbSex.Text
+                    , Age = Convert.ToInt16(txtAge.Text)
+                    , Address = txtAddr.Text
                 };
                 var response = await client.PostAsJsonAsync("/api/Members/", member);
                 response.EnsureSuccessStatusCode(); // Throw on error code.
@@ -243,7 +237,7 @@ namespace WPFRegistration
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Student not Added, May be due to Duplicate ID");
+                MessageBox.Show(ex.Message);
             }
 
             //resetControls();
@@ -258,20 +252,51 @@ namespace WPFRegistration
             return members;
         }
 
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        private async void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             dtgMembers.Focusable = false;
 
-            _member.Title = cmbTitle.Text;
-            _member.FirstName = txtFName.Text;
-            _member.LastName = txtLName.Text;
-            _member.Sex = cmbSex.Text;
-            _member.Age = Convert.ToInt16(txtAge.Text);
-            _member.Address = txtAddr.Text;
+            //_member.Title = cmbTitle.Text;
+            //_member.FirstName = txtFName.Text;
+            //_member.LastName = txtLName.Text;
+            //_member.Sex = cmbSex.Text;
+            //_member.Age = Convert.ToInt16(txtAge.Text);
+            //_member.Address = txtAddr.Text;
 
-            updateMember(_member);
-            resetControls();
-            bindGrid();
+            try
+            {
+                var member = new Member()
+                {
+                    //name = txtStudentName.Text,
+                    //id = int.Parse(txtStudentID.Text),
+                    //gender = cbxGender.SelectedItem.ToString(),
+                    //age = int.Parse(txtAge.Text)
+
+                    Title = cmbTitle.Text
+                    ,FirstName = txtFName.Text
+                    ,LastName = txtLName.Text
+                    ,Sex = cmbSex.Text
+                    ,Age = Convert.ToInt16(txtAge.Text)
+                    ,Address = txtAddr.Text
+                };
+                string temp = "/api/Members/" + _member.MemberId;
+                MessageBox.Show(temp);
+                var response = await client.PutAsJsonAsync("/api/Members/" + _member.MemberId, member);
+                response.EnsureSuccessStatusCode(); // Throw on error code.
+                //MessageBox.Show("Student Added Successfully", "Result", MessageBoxButton.OK, MessageBoxImage.Information);
+                //studentsListView.ItemsSource = await GetAllStudents();
+                //studentsListView.ScrollIntoView(studentsListView.ItemContainerGenerator.Items[studentsListView.Items.Count - 1]);
+                resetControls();
+                bindGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //updateMember(_member);
+            //resetControls();
+            //bindGrid();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
