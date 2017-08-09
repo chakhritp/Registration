@@ -138,19 +138,28 @@ namespace WPFRegistration
             dtgMembers.ItemsSource = members;
             dtgMembers.IsReadOnly = true;*/
 
-            dtgMembers.DataContext = await GetMembers(); ;
-            dtgMembers.ItemsSource = await GetMembers(); ;
-            dtgMembers.IsReadOnly = true;
+            //dtgMembers.DataContext = await GetMembers();
+            //dtgMembers.ItemsSource = await GetMembers();
+            //dtgMembers.IsReadOnly = true;
+
+            List<Member> members = (List<Member>) await GetMembers();
+            lvwMembers.DataContext = members;
+            lvwMembers.ItemsSource = members;
+            //Binding membersBinding = new Binding("MyDataProperty");
+            //myBinding.Source = myDataObject;
+            //myText.SetBinding(TextBlock.TextProperty, myBinding);
         }
 
         private void reversBind(Member _member)
         {
-            cmbTitle.Text = _member.Title;
-            txtFName.Text = _member.FirstName;
-            txtLName.Text = _member.LastName;
-            cmbSex.Text = _member.Sex;
-            txtAge.Text = _member.Age.ToString();
-            txtAddr.Text = _member.Address;
+            //cmbTitle.Text = _member.Title;
+            //txtFName.Text = _member.FirstName;
+            //txtLName.Text = _member.LastName;
+            //cmbSex.Text = _member.Sex;
+            //txtAge.Text = _member.Age.ToString();
+            //txtAddr.Text = _member.Address;
+
+            this.grdRegistration.DataContext = _member;
         }
 
         private Member getMember(int id)
@@ -173,7 +182,7 @@ namespace WPFRegistration
             dbContext.Members.DeleteOne(m => m.MemberId == _member.MemberId);
         }
 
-        private async void dtgMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /*private async void dtgMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0)
             {
@@ -186,7 +195,7 @@ namespace WPFRegistration
 
                 reversBind(_member);
             }
-        }
+        }*/
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
@@ -254,7 +263,7 @@ namespace WPFRegistration
 
         private async void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            dtgMembers.Focusable = false;
+            //dtgMembers.Focusable = false;
 
             //_member.Title = cmbTitle.Text;
             //_member.FirstName = txtFName.Text;
@@ -321,5 +330,19 @@ namespace WPFRegistration
             //bindGrid();
         }
 
+        private async void lvwMembers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                Member member = (Member)e.AddedItems[0];
+                //_member = getMember(member.MemberId);
+                response = await client.GetAsync("/api/Members/" + member.MemberId);
+                response.EnsureSuccessStatusCode(); // Throw on error code.
+                //var members = await response.Content.ReadAsAsync<Member>();
+                _member = await response.Content.ReadAsAsync<Member>();
+
+                reversBind(_member);
+            }
+        }
     }
 }

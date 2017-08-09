@@ -1,8 +1,8 @@
 ﻿<Window x:Class="WPFRegistration.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Registration" Height="400" Width="600">
-    <Grid>
+        Title="Registration" Height="446.74" Width="600">
+    <Grid x:Name="grdRegistration">
 
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="240,10,0,0" Name="txbHeader" Text="Registration Form" VerticalAlignment="Top" RenderTransformOrigin="0.503,-0.178" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="19,32,0,0" Name="txbTitle" Text="Title" VerticalAlignment="Top" />
@@ -13,9 +13,9 @@
             <ComboBoxItem Content="Mrs." HorizontalAlignment="Left" Width="45"/>
         </ComboBox>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="146,33,0,0" Name="txbFName" Text="First Name" VerticalAlignment="Top" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="222,33,0,0" TextWrapping="Wrap" Name="txtFName" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="222,33,0,0" TextWrapping="Wrap" Name="txtFName" Text="{Binding FirstName}" VerticalAlignment="Top" Width="120"/>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="376,33,0,0" Name="txbLName" Text="Last Name" VerticalAlignment="Top" RenderTransformOrigin="1.263,0.371" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="449,32,0,0" TextWrapping="Wrap" Name="txtLName" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="449,32,0,0" TextWrapping="Wrap" Name="txtLName" Text="{Binding LastName}" VerticalAlignment="Top" Width="120"/>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="19,70,0,0" Name="txbSex" Text="Sex" VerticalAlignment="Top" RenderTransformOrigin="1.263,0.371" />
         <ComboBox HorizontalAlignment="Left" Margin="59,71,0,0" Name="cmbSex" VerticalAlignment="Top" Width="75">
             <ComboBoxItem Content="" HorizontalAlignment="Left" Width="75"/>
@@ -23,14 +23,47 @@
             <ComboBoxItem Content="Female" HorizontalAlignment="Left" Width="75"/>
         </ComboBox>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="146,70,0,0" Name="txbAge" Text="Age" VerticalAlignment="Top" RenderTransformOrigin="1.263,0.371" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="222,70,0,0" TextWrapping="Wrap" Name="txtAge" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="222,70,0,0" TextWrapping="Wrap" Name="txtAge" Text="{Binding Age}" VerticalAlignment="Top" Width="120"/>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="376,70,0,0" Name="txbAddr" Text="Address" VerticalAlignment="Top" RenderTransformOrigin="1.263,0.371" />
-        <TextBox HorizontalAlignment="Left" Height="60" Margin="449,71,0,0" TextWrapping="Wrap" Name="txtAddr" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Height="60" Margin="449,71,0,0" TextWrapping="Wrap" Name="txtAddr" Text="{Binding Address}" VerticalAlignment="Top" Width="120"/>
         <Button Content="Clear" HorizontalAlignment="Left" Margin="19,111,0,0" Name="btnClear" VerticalAlignment="Top" Width="74" Click="btnClear_Click"/>
         <Button Content="Create" HorizontalAlignment="Left" Margin="120,111,0,0" Name="btnCreate" VerticalAlignment="Top" Width="74" Click="btnCreate_Click"/>
         <Button Content="Update" HorizontalAlignment="Left" Margin="222,111,0,0" Name="btnUpdate" VerticalAlignment="Top" Width="74" Click="btnUpdate_Click"/>
         <Button Content="Delete" HorizontalAlignment="Left" Margin="320,111,0,0" Name="btnDelete" VerticalAlignment="Top" Width="74" Click="btnDelete_Click"/>
-        <DataGrid AutoGenerateColumns="True" Height="214" HorizontalAlignment="Left" Margin="19,144,0,0" Name="dtgMembers" VerticalAlignment="Top" Width="550" SelectionChanged="dtgMembers_SelectionChanged" />
+        <!--<DataGrid AutoGenerateColumns="True" Height="214" HorizontalAlignment="Left" Margin="19,144,0,0" Name="dtgMembers" VerticalAlignment="Top" Width="550" SelectionChanged="dtgMembers_SelectionChanged" />-->
+
+        <ListView Name="lvwMembers" Margin="10,146,9.6,10.4" SelectionChanged="lvwMembers_SelectionChanged">
+            <ListView.View>
+
+                <GridView AllowsColumnReorder="true"
+              ColumnHeaderToolTip="Member Information">
+
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=MemberId}" 
+                      Header="Member Id" Width="65"/>
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=Title}" 
+                      Header="Title" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=FirstName}" 
+                      Header="First Name" Width="125"/>
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=LastName}" 
+                      Header="Last Name" Width="125"/>
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=Sex}" 
+                      Header="Sex" Width="60"/>
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=Age}" 
+                      Header="Age" Width="50"/>
+                    <GridViewColumn DisplayMemberBinding=
+                          "{Binding Path=Address}" 
+                      Header="Address" Width="100"/>
+
+                </GridView>
+
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>
