@@ -31,20 +31,17 @@
                     Address:&nbsp;&nbsp;&nbsp;<textarea id="txtAddr"></textarea>&nbsp;&nbsp;&nbsp;
                     Member Id Edit/Delete:&nbsp;&nbsp;&nbsp;<input id="txtMemberId" type="text" />
                     <br><br>
-                    <!--<input id="btnget" type="button" onclick="GetMembers();" value="Get_Data" />-->
-                    <!--<input id="btngetbyid" type="button" onclick="GetMemberById();" value="Get_BYID" />-->
                     <input id="btnClear" type="button" onclick="resetControl();" value="Clear" />
                     <input id="btnCreate" type="button" onclick="CreateMember();" value="Create" />
                     <input id="btnGetById" type="button" onclick="GetMemberById();" value="Get By Id(E/D)" />
                     <input id="btnUpdate" type="button" onclick="UpdateMember();" value="Update" />
                     <input id="BtnDelete" type="button" onclick="DeleteMember();" value="Delete" />
                 </td>
-
             </tr>
         </table>
-        <table width="70%" style="color: black; border: solid; text-align:center; " id="MemberTbl">
 
-            <!--<tr>
+        <table width="70%" style="color: black; border: solid; text-align:center; " id="MemberTbl">
+            <tr>
                 <td><b>MemberId</b></td>
                 <td><b>Title</b></td>
                 <td><b>FirstName</b></td>
@@ -52,149 +49,148 @@
                 <td><b>Sex</b></td>
                 <td><b>Age</b></td>
                 <td><b>Address</b></td>
-            </tr>-->
-
+            </tr>
         </table>
     </div>
 
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
     <script lang="ja" type="text/javascript">
-    function resetControl() {
-        document.getElementById("selTitle").selectedIndex = 0;
-        document.getElementById("txtFName").value = "";
-        document.getElementById("txtLName").value = "";
-        document.getElementById("selSex").selectedIndex = 0;
-        document.getElementById("txtAge").value = "";
-        document.getElementById("txtAddr").value = "";
-    }
+        function resetControl() {
+            document.getElementById("selTitle").selectedIndex = 0;
+            document.getElementById("txtFName").value = "";
+            document.getElementById("txtLName").value = "";
+            document.getElementById("selSex").selectedIndex = 0;
+            document.getElementById("txtAge").value = "";
+            document.getElementById("txtAddr").value = "";
+        }
 
-    function GetMembers() {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:49971/api/Members",
-            dataType: "json",
-            success: function (data) {
-                var datavalue = data;
-                var myJsonObject = datavalue;
+        function GetMembers() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:49971/api/Members",
+                dataType: "json",
+                success: function (data) {
+                    var datavalue = data;
+                    var myJsonObject = datavalue;
 
-                contentType: "application/json";
+                    contentType: "application/json";
 
-                $("#MemberTbl").empty();
-                $("#MemberTbl").append('<tr><td><b>MemberId</b></td><td><b>Title</b></td><td><b>FirstName</b></td><td><b>LastName</b></td><td><b>Sex</b></td><td><b>Age</b></td><td><b>Address</b></td></tr>');
+                    $("#MemberTbl").empty();
+                    $("#MemberTbl").append('<tr><td><b>MemberId</b></td><td><b>Title</b></td><td><b>FirstName</b></td><td><b>LastName</b></td><td><b>Sex</b></td><td><b>Age</b></td><td><b>Address</b></td></tr>');
 
-                $.each(myJsonObject, function (i, mobj) {
-                    $("#MemberTbl").append(
-                        '<tr><td width="50px">' + mobj.MemberId +
-                        '</td><td width="50px">' + mobj.Title +
-                        '</td><td width="50px">' + mobj.FirstName +
-                        '</td><td width="50px">' + mobj.LastName +
-                        '</td><td width="50px">' + mobj.Sex +
-                        '</td><td width="50px">' + mobj.Age +
-                        '</td>' + '</td><td width="50px">'
-                        + mobj.Address + '</td></tr>');
-                });
+                    $.each(myJsonObject, function (i, mobj) {
+                        $("#MemberTbl").append(
+                            '<tr><td width="50px">' + mobj.MemberId +
+                            '</td><td width="50px">' + mobj.Title +
+                            '</td><td width="50px">' + mobj.FirstName +
+                            '</td><td width="50px">' + mobj.LastName +
+                            '</td><td width="50px">' + mobj.Sex +
+                            '</td><td width="50px">' + mobj.Age +
+                            '</td><td width="50px">' + mobj.Address +
+                            '</td></tr>');
+                    });
 
-                //alert('bought all data successfully');
-            },
-            error: function (xhr) {
-                alert(xhr.responseText);
-            }
-        });
-    }
+                    //alert('bought all data successfully');
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
 
-    function prepareSearching() {
-        GetMemberById(parseInt(document.getElementById("txtMemberId").value));
-    }
+        function GetMemberById() {
+            var id = parseInt(document.getElementById('txtMemberId').value);
 
-    function GetMemberById() {
-        var id = parseInt(document.getElementById('txtMemberId').value);
+            $.ajax({
+                url: 'http://localhost:49971/api/Members/' + id,
+                type: 'GET',
+                dataType: "json",
+                success: function (data) {
+                    var datavalue = data;
+                    var myJsonObject = datavalue;
 
-        $.ajax({
-            url: 'http://localhost:49971/api/Members/' + id,
-            type: 'GET',
-            dataType: "json",
-            success: function (data) {
-                var datavalue = data;
-                var myJsonObject = datavalue;
+                    contentType: "application/json";
 
-                contentType: "application/json";
+                    var MemberId = myJsonObject.MemberId;
+                    var Title = myJsonObject.Title;
+                    var FirstName = myJsonObject.FirstName;
+                    var LastName = myJsonObject.LastName;
+                    var Sex = myJsonObject.Sex;
+                    var Age = myJsonObject.Age;
+                    var Address = myJsonObject.Address;
 
-                var MemberId = myJsonObject.MemberId;
-                var Title = myJsonObject.Title;
-                var FirstName = myJsonObject.FirstName;
-                var LastName = myJsonObject.LastName;
-                var Sex = myJsonObject.Sex;
-                var Age = myJsonObject.Age;
-                var Address = myJsonObject.Address;
+                    document.getElementById("selTitle").value = Title;
+                    document.getElementById("txtFName").value = FirstName;
+                    document.getElementById("txtLName").value = LastName;
+                    document.getElementById("selSex").value = Sex;
+                    document.getElementById("txtAge").value = Age;
+                    document.getElementById("txtAddr").value = Address;
 
-                document.getElementById("selTitle").value = Title;
-                document.getElementById("txtFName").value = FirstName;
-                document.getElementById("txtLName").value = LastName;
-                document.getElementById("selSex").value = Sex;
-                document.getElementById("txtAge").value = Age;
-                document.getElementById("txtAddr").value = Address;
+                    /*$('<tr><td>' + MemberId + '</td><td>' + Title +
+                        '</td><td>' + FirstName + '</td><td>' + LastName +
+                        '</td><td>' + Sex + '</td><td>' + Age +
+                        '</td><td>' + Address + '</td></tr>').appendTo('#MemberTbl');*/
 
-                /*$('<tr><td>' + MemberId + '</td><td>' + Title +
-                    '</td><td>' + FirstName + '</td><td>' + LastName +
-                    '</td><td>' + Sex + '</td><td>' + Age +
-                    '</td><td>' + Address + '</td></tr>').appendTo('#MemberTbl');*/
+                    //alert('bought by id data successfully');
+                },
+                error: function (xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
 
-                //alert('bought by id data successfully');
-            },
-            error: function (xhr) {
-                alert(xhr.responseText);
-            }
-        });
-    }
+        function CreateMember() {
+            var member = { MemberId: 0, Title: document.getElementById("selTitle").value, FirstName: document.getElementById("txtFName").value, LastName: document.getElementById("txtLName").value, Sex: document.getElementById("selSex").value, Age: document.getElementById("txtAge").value, Address:document.getElementById("txtAddr").value };
 
-    function CreateMember() {
-        //var cardetails = { CarName: "Ertiga", CarModel: "LXI", CarPrice: "5000000", CarColor: "blue" };
-        var member = { MemberId: 0, Title: document.getElementById("selTitle").value, FirstName: document.getElementById("txtFName").value, LastName: document.getElementById("txtLName").value, Sex: document.getElementById("selSex").value, Age: document.getElementById("txtAge").value, Address:document.getElementById("txtAddr").value };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(member),
+                url: "http://localhost:49971/api/Members",
+                dataType: "json",
+                contentType: "application/json",
+            });
 
-        $.ajax({
-            type: "POST",
-            data: JSON.stringify(member),
-            url: "http://localhost:49971/api/Members",
-            dataType: "json",
-            contentType: "application/json",
-        });
+            resetControl();
+            GetMembers();
+            //alert('posted data successfully');
+        }
 
-        GetMembers();
-        //alert('posted data successfully');
-    }
+        function UpdateMember() {
+            var member = { MemberId: document.getElementById("txtMemberId").value, Title: document.getElementById("selTitle").value, FirstName: document.getElementById("txtFName").value, LastName: document.getElementById("txtLName").value, Sex: document.getElementById("selSex").value, Age: document.getElementById("txtAge").value, Address: document.getElementById("txtAddr").value };
+            var t = JSON.stringify(member);
+            var id = parseInt(document.getElementById('txtMemberId').value);
 
-    function UpdateMember() {
-        //var cardetails = { CarName: "Ertiga", CarModel: "LXI", CarPrice: "5000000", CarColor: "blue" };
-        var member = { MemberId: document.getElementById("txtMemberId").value, Title: document.getElementById("selTitle").value, FirstName: document.getElementById("txtFName").value, LastName: document.getElementById("txtLName").value, Sex: document.getElementById("selSex").value, Age: document.getElementById("txtAge").value, Address: document.getElementById("txtAddr").value };
-        var t = JSON.stringify(member);
-        var id = parseInt(document.getElementById('txtMemberId').value);
+            $.ajax({
+                url: 'http://localhost:49971/api/Members/' + id,
+                type: "put",
+                contentType: "application/json; charset=utf-8",
+                data: t,
+                dataType: "json",
+            });
 
-        $.ajax({
-            url: 'http://localhost:49971/api/Members/' + id,
-            type: "put",
-            contentType: "application/json; charset=utf-8",
-            data: t,
-            dataType: "json",
-        });
+            resetControl();
+            GetMembers();
+            //alert('PUT (updated) data successfully');
+        }
 
-        //alert('PUT (updated) data successfully');
-    }
+        function DeleteMember() {
+            var id = parseInt(document.getElementById('txtMemberId').value);
 
-    function DeleteMember() {
-        var id = parseInt(document.getElementById('txtMemberId').value);
-        $.ajax({
-            url: 'http://localhost:49971/api/Members/' + id,
-            type: 'DELETE',
-            success: function (data) {
+            $.ajax({
+                url: 'http://localhost:49971/api/Members/' + id,
+                type: 'DELETE',
+                success: function (data) {
 
-            },
-            error: function (data) {
-                alert('Problem in deleting car:' + data.responseText);
-            }
-        });
+                },
+                error: function (data) {
+                    alert('Problem in deleting car:' + data.responseText);
+                }
+            });
 
-        //alert('Deleted data successfully');
-    }
+            resetControl();
+            GetMembers();
+            //alert('Deleted data successfully');
+        }
     </script>
 </body>
 </html>
